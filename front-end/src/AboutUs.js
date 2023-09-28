@@ -12,9 +12,10 @@ const AboutUs = props => {
     const [text, setText] = useState('')
     const [loaded, setLoaded] = useState(false)
     const [error, setError] = useState('')
-    const imageUrl = 'https://i.ibb.co/vx0PPpH/Photo-Niagara.jpg'
+    // const imageUrl = 'https://i.ibb.co/vx0PPpH/Photo-Niagara.jpg'
+    const [imageUrl, setImageUrl] = useState('');
     /**
-   * A nested function that fetches messages from the back-end server.
+   * A nested function that fetches text from the back-end server.
    */
   const fetchText = () => {
     // setMessages([])
@@ -40,6 +41,15 @@ const AboutUs = props => {
     // fetch messages this once
     fetchText()
 
+    // get image url from backend
+    axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/image-url`)
+      .then((response) => {
+        setImageUrl(response.data.imageUrl);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
     // set a timer to load data from server every n seconds
     const intervalHandle = setInterval(() => {
         fetchText()
@@ -54,11 +64,6 @@ const AboutUs = props => {
 
   return (
     <>
-      {/* <h1>Hi, I'm Byron!</h1>
-      <p>{error}</p>
-      {error && <p className="Messages-error">{error}</p>}
-      <p>I'm a senior at NYU studying CS.</p>
-      <p>In my free time, I like to play soccer, go for casual runs and read up on fashion.</p> */}
       <p>{text}</p>
       <img src={imageUrl} alt="Image"/>
     </>
