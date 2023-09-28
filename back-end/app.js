@@ -78,5 +78,24 @@ app.post('/messages/save', async (req, res) => {
   }
 })
 
+// a route to handle fetching all messages
+app.get('/about-us', (req, res) => {
+  // load all messages from database
+  try {
+    const text = `Hi, I'm Byron! I'm a senior at NYU studying Computer Science. In my free time, 
+    I like playing soccer, going for chill runs and exploring fashion.`
+    res.json({
+      text: text,
+      status: 'all good',
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve messages from the database',
+    })
+  }
+})
+
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
